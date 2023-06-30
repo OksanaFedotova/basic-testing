@@ -1,10 +1,11 @@
-// Uncomment the code below and write your tests
+import lodash from 'lodash';
 import {
   getBankAccount,
   InsufficientFundsError,
   SynchronizationFailedError,
   TransferFailedError,
 } from '.';
+
 describe('BankAccount', () => {
   test('should create account with initial balance', () => {
     expect(getBankAccount(300).getBalance()).toEqual(300);
@@ -53,6 +54,7 @@ describe('BankAccount', () => {
   test('should set new balance if fetchBalance returned number', async () => {
     const account = getBankAccount(300);
     const error = new SynchronizationFailedError();
+    jest.spyOn(lodash, 'random');
     try {
       await account.synchronizeBalance();
       expect(account.getBalance()).not.toBe(300);
